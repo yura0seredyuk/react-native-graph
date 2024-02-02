@@ -29,6 +29,8 @@ import {
   mix,
   Circle,
   Shadow,
+  Line,
+  DashPathEffect,
 } from '@shopify/react-native-skia'
 
 import type { AnimatedLineGraphProps } from './LineGraphProps'
@@ -74,6 +76,8 @@ export function AnimatedLineGraph({
   verticalPadding = lineThickness,
   TopAxisLabel,
   BottomAxisLabel,
+  showReferenceLine,
+  referenceLneConfig,
   ...props
 }: AnimatedLineGraphProps): React.ReactElement {
   const [width, setWidth] = useState(0)
@@ -429,7 +433,7 @@ export function AnimatedLineGraph({
         runOnJS(setFingerPoint)(fingerX)
       }
     },
-    [isActive, setFingerX, width, x]
+    [isActive, width, x]
   )
 
   useAnimatedReaction(
@@ -437,7 +441,7 @@ export function AnimatedLineGraph({
     (active) => {
       runOnJS(setIsActive)(active)
     },
-    [isActive, setIsActive]
+    [isActive]
   )
 
   useEffect(() => {
@@ -502,6 +506,22 @@ export function AnimatedLineGraph({
                       colors={gradientFillColors}
                     />
                   </Path>
+                )}
+
+                {showReferenceLine && (
+                  <Line
+                    p1={vec(0, getYForX(commands.value, indicatorX.value) || 0)}
+                    p2={vec(
+                      width,
+                      getYForX(commands.value, indicatorX.value) || 0
+                    )}
+                    strokeWidth={referenceLneConfig?.strokeWidth || 2}
+                    color={referenceLneConfig?.color || 'black'}
+                  >
+                    <DashPathEffect
+                      intervals={referenceLneConfig?.intervals || [4, 4]}
+                    />
+                  </Line>
                 )}
               </Group>
 

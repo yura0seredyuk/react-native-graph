@@ -109,6 +109,20 @@ export type AnimatedLineGraphProps = BaseLineGraphProps & {
    * The element that gets rendered below the Graph (usually the "min" point/value of the Graph)
    */
   BottomAxisLabel?: () => React.ReactElement | null
+
+  /**
+   * Show reference line
+   */
+  showReferenceLine?: boolean
+
+  /**
+   * Set properties of reference line  thickness, color etc
+   */
+  referenceLneConfig?: {
+    color?: string
+    strokeWidth?: number
+    intervals?: [number, number]
+  }
 }
 
 export type LineGraphProps =
