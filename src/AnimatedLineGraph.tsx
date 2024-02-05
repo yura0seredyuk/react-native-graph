@@ -463,6 +463,8 @@ export function AnimatedLineGraph({
 
   const indicatorVisible = enableIndicator && commandsChanged > 0
 
+  const yForX = getYForX(commands.value, indicatorX.value)
+
   return (
     <View {...props}>
       <GestureDetector gesture={gesture}>
@@ -508,9 +510,9 @@ export function AnimatedLineGraph({
                   </Path>
                 )}
 
-                {showReferenceLine && (
+                {showReferenceLine && yForX && (
                   <Line
-                    p1={vec(0, getYForX(commands.value, indicatorX.value) || 0)}
+                    p1={vec(0, yForX)}
                     p2={vec(
                       width,
                       getYForX(commands.value, indicatorX.value) || 0
