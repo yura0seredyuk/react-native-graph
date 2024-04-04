@@ -310,7 +310,7 @@ export function AnimatedLineGraph({
       return to.interpolate(from, interpolateProgress.current)
     },
     // RN Skia deals with deps differently. They are actually the required SkiaValues that the derived value listens to, not react values.
-    [interpolateProgress]
+    [interpolateProgress, paths]
   )
 
   const gradientPath = useComputedValue(
@@ -463,7 +463,7 @@ export function AnimatedLineGraph({
 
   const indicatorVisible = enableIndicator && commandsChanged > 0
 
-  const yForX = getYForX(commands.value, indicatorX.value)
+  const lastPoint = path.current?.getLastPt()
 
   return (
     <View {...props}>
@@ -510,13 +510,10 @@ export function AnimatedLineGraph({
                   </Path>
                 )}
 
-                {showReferenceLine && yForX && (
+                {showReferenceLine && lastPoint && (
                   <Line
-                    p1={vec(0, yForX)}
-                    p2={vec(
-                      width,
-                      getYForX(commands.value, indicatorX.value) || 0
-                    )}
+                    p1={vec(0, lastPoint.y)}
+                    p2={vec(width, lastPoint.y)}
                     strokeWidth={referenceLneConfig?.strokeWidth || 2}
                     color={referenceLneConfig?.color || 'black'}
                   >
