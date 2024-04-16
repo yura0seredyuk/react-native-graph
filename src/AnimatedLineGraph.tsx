@@ -428,12 +428,12 @@ export function AnimatedLineGraph({
   useAnimatedReaction(
     () => x.value,
     (fingerX) => {
-      if (isActive.value || fingerX) {
+      if (isActive.value) {
         setFingerX(fingerX)
         runOnJS(setFingerPoint)(fingerX)
       }
     },
-    [isActive, width, x]
+    [isActive, width, x, setFingerX]
   )
 
   useAnimatedReaction(
@@ -510,7 +510,7 @@ export function AnimatedLineGraph({
                   </Path>
                 )}
 
-                {showReferenceLine && lastPoint && (
+                {showReferenceLine && lastPoint && !!lastPoint.y && (
                   <Line
                     p1={vec(0, lastPoint.y)}
                     p2={vec(width, lastPoint.y)}
