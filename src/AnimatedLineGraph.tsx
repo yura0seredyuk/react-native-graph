@@ -441,7 +441,7 @@ export function AnimatedLineGraph({
     (active) => {
       runOnJS(setIsActive)(active)
     },
-    [isActive]
+    [isActive, setIsActive]
   )
 
   useEffect(() => {
