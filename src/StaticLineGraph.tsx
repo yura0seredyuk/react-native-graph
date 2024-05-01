@@ -49,6 +49,7 @@ export function StaticLineGraph({
         canvasWidth: width,
         horizontalPadding: lineThickness,
         verticalPadding: lineThickness,
+        pixelRatio: 2,
       }),
     [height, lineThickness, pathRange, pointsInRange, width]
   )
