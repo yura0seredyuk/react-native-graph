@@ -1,8 +1,6 @@
 import { SkPath, Skia, SkPoint } from '@shopify/react-native-skia'
 import type { GraphPoint, GraphRange } from './LineGraphProps'
 
-const PIXEL_RATIO = 2
-
 export interface GraphXRange {
   min: Date
   max: Date
@@ -43,6 +41,8 @@ type GraphPathConfig = {
    * Range of the graph's x and y-axis
    */
   range: GraphPathRange
+
+  pixelRatio: number
 }
 
 type GraphPathConfigWithGradient = GraphPathConfig & {
@@ -140,6 +140,7 @@ function createGraphPathBase({
   canvasHeight: height,
   canvasWidth: width,
   shouldFillGradient,
+  pixelRatio,
 }: GraphPathConfigWithGradient | GraphPathConfigWithoutGradient):
   | SkPath
   | GraphPathWithGradient {
@@ -164,7 +165,7 @@ function createGraphPathBase({
     Math.round(((pixel - startX) / (endX - startX)) * (graphData.length - 1))
 
   const getNextPixelValue = (pixel: number) => {
-    if (pixel === endX || pixel + PIXEL_RATIO < endX) return pixel + PIXEL_RATIO
+    if (pixel === endX || pixel + pixelRatio < endX) return pixel + pixelRatio
     return endX
   }
 
@@ -187,7 +188,7 @@ function createGraphPathBase({
         getXInRange(drawingWidth, graphData[index]!.date, range.x) +
         horizontalPadding
 
-      const isExactPointInsidePixelRatio = Array(PIXEL_RATIO)
+      const isExactPointInsidePixelRatio = Array(pixelRatio)
         .fill(0)
         .some((_value, additionalPixel) => {
           return pixel + additionalPixel === exactPointX

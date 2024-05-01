@@ -123,6 +123,8 @@ export type AnimatedLineGraphProps = BaseLineGraphProps & {
     strokeWidth?: number
     intervals?: [number, number]
   }
+
+  pixelRatio?: number
 }
 
 export type LineGraphProps =

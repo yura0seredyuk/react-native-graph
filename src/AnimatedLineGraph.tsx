@@ -78,6 +78,7 @@ export function AnimatedLineGraph({
   BottomAxisLabel,
   showReferenceLine,
   referenceLneConfig,
+  pixelRatio = 2,
   ...props
 }: AnimatedLineGraphProps): React.ReactElement {
   const [width, setWidth] = useState(0)
@@ -203,6 +204,7 @@ export function AnimatedLineGraph({
       verticalPadding,
       canvasHeight: height,
       canvasWidth: width,
+      pixelRatio,
     }
 
     if (shouldFillGradient) {
